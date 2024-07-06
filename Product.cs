@@ -5,4 +5,5 @@ public class Product
     public bool Sold { get; set; }
     public DateTime StockDate { get; set; }
     public int ManufactureYear { get; set; }
+    public double Condition { get; set; }
 }

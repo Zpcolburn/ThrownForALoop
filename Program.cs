@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
 
 List<Product> products = new List<Product>()
@@ -9,7 +10,8 @@ List<Product> products = new List<Product>()
         Price = 15,
         Sold = false,
         StockDate = new DateTime(2022, 10, 20),
-        ManufactureYear = 2010
+        ManufactureYear = 2010,
+        Condition = 4.2
     },
     new Product()
     {
@@ -17,7 +19,8 @@ List<Product> products = new List<Product>()
         Price = 12,
         Sold = false,
         StockDate = new DateTime(2022, 6, 27),
-        ManufactureYear = 2014
+        ManufactureYear = 2014,
+        Condition = 5.0
     },
     new Product()
     {
@@ -25,7 +28,8 @@ List<Product> products = new List<Product>()
         Price = 8,
         Sold = false,
         StockDate = new DateTime(2022, 3, 27),
-        ManufactureYear = 2019
+        ManufactureYear = 2019,
+        Condition = 3.7
     },
     new Product()
     {
@@ -33,7 +37,8 @@ List<Product> products = new List<Product>()
         Price = 8,
         Sold = false,
         StockDate = new DateTime(2022, 11, 4),
-        ManufactureYear = 2010
+        ManufactureYear = 2010,
+        Condition = 4.9
     },
     new Product()
     {
@@ -41,7 +46,8 @@ List<Product> products = new List<Product>()
         Price = 35,
         Sold = false,
         StockDate = new DateTime(2022, 8, 20),
-        ManufactureYear = 2020
+        ManufactureYear = 2020,
+        Condition = 5.0
     },
 };
 
@@ -70,9 +76,27 @@ while (response > products.Count || response < 1)
 }
 
 Product chosenProduct = products[response - 1];
+
 DateTime now = DateTime.Now;
+
 TimeSpan timeInStock = now - chosenProduct.StockDate;
+
 Console.WriteLine(@$"You chose: 
-{chosenProduct.Name}, which costs {chosenProduct.Price} dollars.
+
+{chosenProduct.Name}, which costs {chosenProduct.Price} dollars. The condion of the item is a {chosenProduct.Condition} out of 5.
+
 It is {now.Year - chosenProduct.ManufactureYear} years old. 
+
 It {(chosenProduct.Sold ? "is not available." : $"has been in stock for {timeInStock.Days} days.")}");
+
+decimal totalValue = 0.0M;
+foreach (Product product in products)
+{
+    if (!product.Sold)
+    {
+        totalValue += product.Price;
+    }
+}
+Console.WriteLine($"Total inventory value: ${totalValue}");
+Console.Read();
+
