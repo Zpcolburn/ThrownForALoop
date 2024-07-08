@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
 
+// List of all the products in the store
 List<Product> products = new List<Product>()
 {
     new Product()
@@ -51,14 +52,17 @@ List<Product> products = new List<Product>()
     },
 };
 
+
 string greeting = @"Welcome to Thrown for a Loop
 Your one-stop shop for used sporting Equipment";
 
 Console.WriteLine(greeting);
-//ViewProductDetails();
+
+// Main menu loop
 string choice = null;
 while (choice != "0")
 {
+    // Menu options 
     Console.WriteLine(@"Choose an option:
                         0. Exit
                         1. View All Products
@@ -67,27 +71,27 @@ while (choice != "0")
     choice = Console.ReadLine();
     if (choice == "0")
     {
-        Console.WriteLine("Goodbye!");
+        Console.WriteLine("Goodbye!"); // Exit message 
     }
     else if (choice == "1")
     {
-        ListProducts();
+        ListProducts(); // List of all products
     }
     else if (choice == "2") 
     {
-        ViewProductDetails();
+        ViewProductDetails(); // View details of a specific product 
     }
     else if  (choice == "3")
     {
-        ViewLatestProducts();
+        ViewLatestProducts(); // View latest products
     }
 }
 
-
+// Method to view details of a single product
 void ViewProductDetails()
 {
     Console.WriteLine("Products:");
-    ListProducts();
+    ListProducts(); // List of all products
 
     Product chosenProduct = null;
 
@@ -97,15 +101,15 @@ void ViewProductDetails()
         try
         {
             int response = int.Parse(Console.ReadLine().Trim());
-            chosenProduct = products[response - 1];
+            chosenProduct = products[response - 1]; // Get chosen product
         }
         catch (FormatException)
         {
-            Console.WriteLine("Please type only integers!");
+            Console.WriteLine("Please type only integers!"); // This handles the formatting error
         }
         catch (ArgumentOutOfRangeException)
         {
-            Console.WriteLine("Please choose an existing item only!");
+            Console.WriteLine("Please choose an existing item only!"); // Handles range error 
         }
         catch (Exception ex)
         {
@@ -122,6 +126,8 @@ It is {now.Year - chosenProduct.ManufactureYear} years old.
 It {(chosenProduct.Sold ? "is not available." : $"has been in stock for {timeInStock.Days} days.")}");
 
 }
+
+//Method to list all products
 void ListProducts()
 {
     decimal totalValue = 0.0M;
@@ -129,16 +135,18 @@ void ListProducts()
     {
         if (!product.Sold)
         {
-            totalValue += product.Price;
+            totalValue += product.Price; // Calculates the total inventory value
         }
     }
     Console.WriteLine($"Total inventory value: ${totalValue}");
     Console.WriteLine("Products:");
     for (int i = 0; i < products.Count; i++)
     {
-        Console.WriteLine($"{i + 1}. {products[i].Name}");
+        Console.WriteLine($"{i + 1}. {products[i].Name}"); // List product names
     }
 }
+
+// Method to view latest products
 void ViewLatestProducts()
 {
     // create a new empty List to store the latest products
